@@ -12,7 +12,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-ngdocs');
 
     grunt.initConfig({
-        dist: 'dist',
+        dist: 'assets',
         filename: 'angular-semantic-ui',
         pkg: grunt.file.readJSON('package.json'),
         concat: {
@@ -28,13 +28,13 @@ module.exports = function(grunt) {
                     'src/rating/rating.js',
                     'src/wizard/wizard.js',
                 ],
-                dest: '<%= dist %>/<%= filename %>.js'
+                dest: '<%= dist %>/js/<%= filename %>.js'
             }
         },
         uglify: {
             dist: {
-                src: ['<%= dist %>/<%= filename %>.js'],
-                dest: '<%= dist %>/<%= filename %>.min.js'
+                src: ['<%= dist %>/js/<%= filename %>.js'],
+                dest: '<%= dist %>/jsmin/<%= filename %>.min.js'
             }
         },
         karma: {
