@@ -4,6 +4,7 @@ angular.module('angularify.semantic.dropdown', ['ngSanitize'])
     .controller('DropDownController', ['$scope',
         function($scope) {
             $scope.items = [];
+            $scope.display = '';
 
             this.add_item = function(scope) {
                 $scope.items.push(scope);
@@ -40,19 +41,27 @@ angular.module('angularify.semantic.dropdown', ['ngSanitize'])
         scope: {
             open: '@',
             model: '=ngModel',
-            styletype: '@'
+            styletype: '@',
+            displayTitle: '='
+
         },
-        template: '<div class="{{dropdown_class}}">' + '<div class="default text">{{model}}</div>' + '<i class="dropdown icon"></i>' + '<div class="menu" ng-transclude>' + '</div>' + '</div>',
+        template: '<div class="{{dropdown_class}}">' + '<div class="default text">{{displayTitle||model}}</div>' + '<i class="dropdown icon"></i>' + '<div class="menu" ng-transclude>' + '</div>' + '</div>',
         link: function(scope, element, attrs, DropDownController) {
+            // if (scope.displayTitle === undefined) {
+            //     scope.display = scope.model
+            // } else {
+            //     scope.display = scope.displayTitle
+            // }
             scope.base_class = 'ui ' + scope.styletype + ' dropdown';
             scope.dropdown_class = scope.base_class;
             if (scope.open === 'true') {
                 scope.open = true;
-                scope.dropdown_class = scope.base_class+ ' active visible';
+                scope.dropdown_class = scope.base_class + ' active visible';
             } else {
                 scope.open = false;
             }
             DropDownController.add_item(scope);
+
 
             //
             // Watch for ng-model changing
@@ -63,6 +72,7 @@ angular.module('angularify.semantic.dropdown', ['ngSanitize'])
                 DropDownController.update_title(val);
             });
 
+
             //
             // Click handler
             //
@@ -70,13 +80,13 @@ angular.module('angularify.semantic.dropdown', ['ngSanitize'])
                 if (scope.open === false || scope.open === undefined) {
                     scope.open = true;
                     scope.$apply(function() {
-                        scope.dropdown_class = scope.base_class +' active visible';
+                        scope.dropdown_class = scope.base_class + ' active visible';
                     });
                 } else {
                     scope.open = false;
                     scope.model = scope.title
                     scope.$apply(function() {
-                        scope.dropdown_class = scope.base_class +' ';
+                        scope.dropdown_class = scope.base_class + ' ';
                     });
                 }
             });

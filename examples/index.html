@@ -30,7 +30,7 @@
                 <div class="column">
                     <!-- Dynamic-Selection Dropdown -->
                     <h3 class="ui header">Dynamic-Selection</h3>
-                    <dropdown styletype="selection" ng-model="person.title">
+                    <dropdown styletype="selection" display-title="person" ng-model="person.title">
                         <dropdown-group title="t" ng-repeat="t in titles">{{t}}</dropdown-group>
                     </dropdown>
                 </div>
@@ -48,7 +48,6 @@
                     <h3 class="ui header">Dynamic-Floating</h3>
                     <dropdown styletype="floating" ng-model="person.title">
                         <dropdown-group title="t" ng-repeat="t in titles">{{t}}</dropdown-group>
-
                     </dropdown>
                 </div>
             </div>
