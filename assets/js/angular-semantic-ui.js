@@ -288,32 +288,30 @@ angular.module('angularify.semantic.dropdown', ['ngSanitize'])
             };
 
             this.update_title = function(title) {
+                $scope.selected_title = title;
                 var i = 0;
                 for (i in $scope.items) {
                     $scope.items[i].title = title;
                 }
             };
-
         }
     ])
 
 .directive('dropdown', function() {
     return {
-        restrict: 'E',
+        restrict: 'EA',
         replace: true,
         transclude: true,
         controller: 'DropDownController',
         scope: {
-            title: '@',
             open: '@',
             model: '=ngModel',
-            selection: '@'
+            styletype: '@'
         },
-        template: '<div class="{{dropdown_class}}">' + '<div class="default text">{{title}}</div>' + '<i class="dropdown icon"></i>' + '<div class="menu" ng-transclude>' + '</div>' + '</div>',
+        template: '<div class="{{dropdown_class}}">' + '<div class="default text">{{model}}</div>' + '<i class="dropdown icon"></i>' + '<div class="menu" ng-transclude>' + '</div>' + '</div>',
         link: function(scope, element, attrs, DropDownController) {
-            
-            scope.base_class = 'ui ' + scope.selection + ' dropdown';
-
+            scope.base_class = 'ui ' + scope.styletype + ' dropdown';
+            scope.dropdown_class = scope.base_class;
             if (scope.open === 'true') {
                 scope.open = true;
                 scope.dropdown_class = scope.base_class+ ' active visible';
@@ -321,19 +319,6 @@ angular.module('angularify.semantic.dropdown', ['ngSanitize'])
                 scope.open = false;
             }
             DropDownController.add_item(scope);
-
-            //
-            // Watch for title changing
-            //
-            scope.$watch('title', function(val) {
-                if (val === undefined)
-                    return;
-
-                if (val === scope.title)
-                    return;
-
-                scope.model = val;
-            });
 
             //
             // Watch for ng-model changing
@@ -348,8 +333,7 @@ angular.module('angularify.semantic.dropdown', ['ngSanitize'])
             // Click handler
             //
             element.bind('click', function() {
-
-                if (scope.open === false) {
+                if (scope.open === false || scope.open === undefined) {
                     scope.open = true;
                     scope.$apply(function() {
                         scope.dropdown_class = scope.base_class +' active visible';
@@ -381,7 +365,7 @@ angular.module('angularify.semantic.dropdown', ['ngSanitize'])
             // Check if title= was set... if not take the contents of the dropdown-group tag
             // title= is for dynamic variables from something like ng-repeat {{variable}}
             var title;
-            if (scope.title === undefined) {
+            if (scope.title !== undefined) {
                 title = scope.title;
             } else {
                 title = element.children()[0].innerHTML;
@@ -391,8 +375,7 @@ angular.module('angularify.semantic.dropdown', ['ngSanitize'])
             // Menu item click handler
             //
             element.bind('click', function() {
-
-                DropDownController.update_title(scope.title);
+                DropDownController.update_title(title);
             });
         }
     };

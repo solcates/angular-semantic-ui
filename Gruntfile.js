@@ -8,6 +8,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-html2js');
     grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-wiredep');
+    grunt.loadNpmTasks('grunt-asset-injector');
     grunt.loadNpmTasks('grunt-conventional-changelog');
     grunt.loadNpmTasks('grunt-ngdocs');
 
@@ -37,6 +39,28 @@ module.exports = function(grunt) {
                 dest: '<%= dist %>/jsmin/<%= filename %>.min.js'
             }
         },
+        wiredep: {
+            target: {
+
+                src: 'examples/index.html'
+
+            }
+            // Inject application script files into index.html (doesn't include bower)
+
+        },
+        injector: {
+            options: {
+                transform: function(filePath) {
+                        filePath = filePath.replace('/assets/', '../assets/');
+                        return '<script src="' + filePath + '"></script>';
+                    }
+            },
+            local_dependencies: {
+                files: {
+                    'examples/index.html': ['assets/js/angular-semantic-ui.js'],
+                }
+            }
+        },
         karma: {
             options: {
                 configFile: 'karma.conf.js'
@@ -51,13 +75,12 @@ module.exports = function(grunt) {
         watch: {
             javascript: {
                 files: ['src/**/*.js'],
-                tasks: ['concat:js', 'uglify']
-            }
-
+                tasks: ['concat:js', 'uglify', 'concat','injector']
+            },
         }
     });
 
     grunt.registerTask('build', ['concat:js', 'uglify']);
     grunt.registerTask('test', ['karma']);
-    grunt.registerTask('default', ['concat:js', 'uglify', 'watch:javascript']);
+    grunt.registerTask('default', ['wiredep',  'concat:js', 'uglify','injector', 'watch:javascript']);
 };

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Example</title>
+    <!-- bower:css -->
+    <link rel="stylesheet" href="../bower_components/semantic/build/packaged/css/semantic.css" />
+    <!-- endbower -->
+    <!-- injector:css -->
+    <!-- endinjector -->
+
+</head>
+
+<body ng-app="app">
+    <!-- DropDown Example -->
+    <div ng-controller="DropDownCtrl">
+        <div class="ui raised segment">
+            <h3 class="ui header">DropDown Example</h3>
+            <div class="ui grid three column">
+                <div class="column">
+                    <!-- Static Dropdown -->
+                    <h3 class="ui header">Static</h3>
+                    <dropdown ng-model="mydropdown">
+                        <dropdown-group>item1</dropdown-group>
+                        <dropdown-group>item2</dropdown-group>
+                        <dropdown-group>item3</dropdown-group>
+                        <dropdown-group>item4</dropdown-group>
+                    </dropdown>
+                </div>
+                <div class="column">
+                    <!-- Dynamic-Selection Dropdown -->
+                    <h3 class="ui header">Dynamic-Selection</h3>
+                    <dropdown styletype="selection" ng-model="person.title">
+                        <dropdown-group title="t" ng-repeat="t in titles">{{t}}</dropdown-group>
+                    </dropdown>
+                </div>
+                <div class="column">
+                    <!-- Dynamic-Inline Dropdown -->
+                    <h3 class="ui header">Dynamic-Inline</h3>
+                    <p>My name is
+                        <dropdown styletype="inline" ng-model="person.title">
+                            <dropdown-group title="t" ng-repeat="t in titles">{{t}}</dropdown-group>
+                        </dropdown>
+                        Potato Head
+                    </p>
+                </div>
+                <div class="column">
+                    <h3 class="ui header">Dynamic-Floating</h3>
+                    <dropdown styletype="floating" ng-model="person.title">
+                        <dropdown-group title="t" ng-repeat="t in titles">{{t}}</dropdown-group>
+
+                    </dropdown>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- bower:js -->
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-mocks/angular-mocks.js"></script>
+    <script src="../bower_components/semantic/build/packaged/javascript/semantic.js"></script>
+    <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <!-- endbower -->
+    <!-- injector:js -->
+    <script src="../assets/js/angular-semantic-ui.js"></script>
+    <!-- endinjector -->
+    <script src="app.js"></script>
+</body>
+
+</html>
