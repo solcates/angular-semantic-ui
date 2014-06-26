@@ -306,11 +306,13 @@ angular.module('angularify.semantic.dropdown', ['ngSanitize'])
         scope: {
             title: '@',
             open: '@',
-            model: '=ngModel'
+            model: '=ngModel',
+            selection: '@'
         },
         template: '<div class="{{dropdown_class}}">' + '<div class="default text">{{title}}</div>' + '<i class="dropdown icon"></i>' + '<div class="menu" ng-transclude>' + '</div>' + '</div>',
         link: function(scope, element, attrs, DropDownController) {
-            scope.dropdown_class = 'ui selection dropdown';
+            
+            scope.dropdown_class = 'ui ' + scope.selection + ' dropdown';
 
             if (scope.open === 'true') {
                 scope.open = true;
