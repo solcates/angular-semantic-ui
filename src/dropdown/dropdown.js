@@ -10,7 +10,7 @@ angular.module('angularify.semantic.dropdown', ['ngSanitize'])
                 $scope.items.push(scope);
 
                 scope.$on('$destroy', function(event) {
-                    this.remove_accordion(scope);
+                    this.remove_item(scope);
                 });
 
                 return $scope.items;
