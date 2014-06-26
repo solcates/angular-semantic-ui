@@ -8,11 +8,9 @@ angular.module('angularify.semantic.dropdown', ['ngSanitize'])
 
             this.add_item = function(scope) {
                 $scope.items.push(scope);
-
                 scope.$on('$destroy', function(event) {
                     this.remove_item(scope);
                 });
-
                 return $scope.items;
             };
 
