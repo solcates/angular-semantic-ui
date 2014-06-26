@@ -38,6 +38,7 @@ angular.module('angularify.semantic.dropdown', ['ngSanitize'])
         replace: true,
         transclude: true,
         controller: 'DropDownController',
+        required: 'ngModel',
         scope: {
             open: '@',
             model: '=ngModel',
@@ -47,11 +48,7 @@ angular.module('angularify.semantic.dropdown', ['ngSanitize'])
         },
         template: '<div class="{{dropdown_class}}">' + '<div class="default text">{{displayTitle||model}}</div>' + '<i class="dropdown icon"></i>' + '<div class="menu" ng-transclude>' + '</div>' + '</div>',
         link: function(scope, element, attrs, DropDownController) {
-            // if (scope.displayTitle === undefined) {
-            //     scope.display = scope.model
-            // } else {
-            //     scope.display = scope.displayTitle
-            // }
+
             scope.base_class = 'ui ' + scope.styletype + ' dropdown';
             scope.dropdown_class = scope.base_class;
             if (scope.open === 'true') {
@@ -62,7 +59,6 @@ angular.module('angularify.semantic.dropdown', ['ngSanitize'])
             }
             DropDownController.add_item(scope);
 
-
             //
             // Watch for ng-model changing
             //
@@ -70,6 +66,9 @@ angular.module('angularify.semantic.dropdown', ['ngSanitize'])
                 // update title
                 scope.model = val;
                 DropDownController.update_title(val);
+                if (angular.isDefined(attrs.onChange)) {
+                    scope.$parent.$eval(attrs.onChange);
+                }
             });
 
 
@@ -120,6 +119,8 @@ angular.module('angularify.semantic.dropdown', ['ngSanitize'])
             //
             element.bind('click', function() {
                 DropDownController.update_title(title);
+
+
             });
         }
     };

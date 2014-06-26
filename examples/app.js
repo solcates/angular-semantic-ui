@@ -21,6 +21,10 @@ app.controller('DropDownCtrl', ['$scope',
         $scope.person = {
             title: 'Mr.'
         };
+        $scope.Testing = function(mod){
+            console.log('Testing Changed Model');
+            console.log(mod);
+        }
 
 
     }
