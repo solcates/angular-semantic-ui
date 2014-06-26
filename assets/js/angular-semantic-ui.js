@@ -312,11 +312,11 @@ angular.module('angularify.semantic.dropdown', ['ngSanitize'])
         template: '<div class="{{dropdown_class}}">' + '<div class="default text">{{title}}</div>' + '<i class="dropdown icon"></i>' + '<div class="menu" ng-transclude>' + '</div>' + '</div>',
         link: function(scope, element, attrs, DropDownController) {
             
-            scope.dropdown_class = 'ui ' + scope.selection + ' dropdown';
+            scope.base_class = 'ui ' + scope.selection + ' dropdown';
 
             if (scope.open === 'true') {
                 scope.open = true;
-                scope.dropdown_class = scope.dropdown_class + ' active visible';
+                scope.dropdown_class = scope.base_class+ ' active visible';
             } else {
                 scope.open = false;
             }
@@ -352,13 +352,13 @@ angular.module('angularify.semantic.dropdown', ['ngSanitize'])
                 if (scope.open === false) {
                     scope.open = true;
                     scope.$apply(function() {
-                        scope.dropdown_class = 'ui selection dropdown active visible';
+                        scope.dropdown_class = scope.base_class +' active visible';
                     });
                 } else {
                     scope.open = false;
                     scope.model = scope.title
                     scope.$apply(function() {
-                        scope.dropdown_class = 'ui selection dropdown';
+                        scope.dropdown_class = scope.base_class +' ';
                     });
                 }
             });
