@@ -272,15 +272,6 @@ angular.module('angularify.semantic.dropdown', ['ngSanitize'])
             $scope.items = [];
             $scope.display = '';
 
-            this.add_item = function(scope) {
-                $scope.items.push(scope);
-
-                scope.$on('$destroy', function(event) {
-                    this.remove_accordion(scope);
-                });
-
-                return $scope.items;
-            };
 
             this.remove_item = function(scope) {
                 var index = $scope.items.indexOf(scope);
@@ -288,6 +279,14 @@ angular.module('angularify.semantic.dropdown', ['ngSanitize'])
                     $scope.items.splice(index, 1);
             };
 
+            this.add_item = function(scope) {
+                $scope.items.push(scope);
+                scope.$on('$destroy', function(event) {
+                    this.remove_item(scope);
+                });
+                return $scope.items;
+            };
+            
             this.update_title = function(title) {
                 $scope.selected_title = title;
                 var i = 0;
