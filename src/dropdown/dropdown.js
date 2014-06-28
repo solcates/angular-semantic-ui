@@ -16,7 +16,10 @@ angular.module('angularify.semantic.dropdown', ['ngSanitize'])
             this.add_item = function(scope) {
                 $scope.items.push(scope);
                 scope.$on('$destroy', function(event) {
-                    this.remove_item(scope);
+                    var index = $scope.items.indexOf(scope);
+                    if (index !== -1)
+                        $scope.items.splice(index, 1);
+
                 });
                 return $scope.items;
             };
@@ -102,7 +105,7 @@ angular.module('angularify.semantic.dropdown', ['ngSanitize'])
             title: '=title',
             displayTitle: '='
         },
-        template: '<div class="item" ng-transclude >{{displayTitle}}</div>',
+        template: '<div class="item" ng-transclude >{{displayTitle||title}}</div>',
         link: function(scope, element, attrs, DropDownController) {
 
             // Check if title= was set... if not take the contents of the dropdown-group tag
